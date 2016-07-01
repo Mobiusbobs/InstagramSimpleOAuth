@@ -79,6 +79,21 @@ NSString *const InstagramLoginCancelButtonTitle = @"OK";
     [self loadInstagramLogin];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    if ([self.navigationController.viewControllers indexOfObject:self]==NSNotFound) {
+        // Navigation button was pressed. Do some stuff
+        NSError *cancelError = [[NSError alloc] initWithDomain:@"Cancel" code:0 userInfo:@{}];
+        self.completion(nil, cancelError);
+        [self.navigationController popViewControllerAnimated:NO];
+    }
+    [super viewWillDisappear:animated];
+}
+
 #pragma mark - <UIWebViewDelegate>
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType;
