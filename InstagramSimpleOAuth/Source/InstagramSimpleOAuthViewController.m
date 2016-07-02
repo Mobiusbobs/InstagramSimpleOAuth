@@ -72,16 +72,24 @@ NSString *const InstagramLoginCancelButtonTitle = @"OK";
 
 #pragma mark - View Lifecycle
 
+- (void)viewDidLoad
+{
+    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)])
+        [self.navigationController.view removeGestureRecognizer:self.navigationController.interactivePopGestureRecognizer];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self.navigationController setNavigationBarHidden:NO];
+    [self.navigationController.navigationBar setHidden:NO];
+}
+
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     
     [self loadInstagramLogin];
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self.navigationController.navigationBar setHidden:NO];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
